@@ -117,6 +117,19 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 .trial p { color: var(--ink-2); max-width: 52rem; }
 .trial strong { color: var(--ink); }
 
+/* ---------- Thank-you page: the license keys after checkout ---------- */
+.thanks .key-status { margin-top: 12px; font-size: 18px; color: var(--ink); }
+.thanks h2 { font-size: 21px; font-weight: 700; margin-top: 32px; }
+#licenses { display: grid; gap: 16px; margin-top: 20px; }
+.key-card { background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 12px; padding: 20px 22px; display: grid; gap: 10px; }
+.key-card h2 { margin-top: 0; }
+.key-id { font: 500 14px/1.4 var(--font-mono); color: var(--ink-2); }
+.key-label { font-size: 14px; color: var(--ink-3); }
+.key-text { width: 100%; min-width: 0; resize: none; font: 13px/1.5 var(--font-mono); color: var(--ink); background: var(--paper); border: 1px solid var(--rule-strong); border-radius: 6px; padding: 10px 12px; overflow-wrap: anywhere; word-break: break-all; }
+.key-text:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.key-card .btn { justify-self: start; cursor: pointer; }
+.key-steps { padding-left: 22px; display: grid; gap: 6px; }
+
 /* ---------- Footer ---------- */
 .site-foot { border-top: 1px solid var(--rule); padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: 14px; color: var(--ink-3); }
 .site-foot nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }

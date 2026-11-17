@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your license key · FlubSmith</title>
+<meta name="description" content="Your FlubSmith license key, after you buy, renew or upgrade.">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css?v=5">
+</head>
+<!-- data-key-service: the license key service's address (techniquest-keys). It
+     must match where the service is deployed, and the service's ALLOWED_ORIGINS
+     must include https://www.flubsmith.com. -->
+<body data-key-service="https://keys.flubsmith.com">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-mark" class="mark"><g class="take"><rect x="4" y="13" width="2.5" height="6" rx="1.25"/><rect x="8" y="10" width="2.5" height="12" rx="1.25"/><rect x="21.5" y="11" width="2.5" height="10" rx="1.25"/><rect x="25.5" y="13.5" width="2.5" height="5" rx="1.25"/></g><g class="retake"><rect x="12" y="6" width="2.5" height="20" rx="1.25"/><rect x="17.5" y="9" width="2.5" height="14" rx="1.25"/></g></g>
+  </defs>
+</svg>
+
+<header class="wrap top">
+  <a class="brand" href="./"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-mark"/></svg><span>Flub<span class="smith">Smith</span></span></a>
+  <nav aria-label="Site">
+    <a href="./">Home</a>
+    <a href="./#pricing">Pricing</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20license">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap doc thanks">
+  <h1>Thank you</h1>
+
+  <p class="key-status" id="status" role="status" aria-live="polite">Getting your license key…</p>
+
+  <section id="missing" hidden>
+    <p>This page shows your license key after you buy, renew or upgrade FlubSmith. The link that brought you here has no order in it.</p>
+    <p>If you have just paid, write to <a href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20license">hello@techniquestassociates.com</a> with your receipt and we'll send your key.</p>
+  </section>
+
+  <section id="licenses" hidden aria-label="Your license keys"></section>
+
+  <section id="help" hidden>
+    <h2>Adding the key to FlubSmith</h2>
+    <ol class="key-steps">
+      <li>Open FlubSmith.</li>
+      <li>In the settings panel on the right, find <strong>License</strong>.</li>
+      <li>Paste the key into <strong>Add a license key</strong> and choose <strong>Add key</strong>.</li>
+    </ol>
+    <p>A key works on up to three of your computers. To move it to another, choose <strong>Remove</strong> beside it on the old one first.</p>
+    <p><strong>Renewed or upgraded?</strong> Paste this new key in place of your old one on each computer. It has the same license ID, so it doesn't use up another computer.</p>
+    <div class="summary">
+      <p><strong>Save this key now,</strong> for example in a password manager. If you lose it, write to <a href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20license">hello@techniquestassociates.com</a> with your license ID or your receipt and we'll send it again.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-foot">
+  <span>&copy; 2026 <a href="https://techniquestassociates.com/">TechniQuest Associates</a></span>
+  <nav aria-label="Footer"><a href="privacy.html">Privacy policy</a><a href="mailto:hello@techniquestassociates.com">hello@techniquestassociates.com</a></nav>
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  // Only a copy served from this computer may point at another service, for testing.
+  const service = (local && params.get('service')) || document.body.dataset.keyService;
+  const session = params.get('session_id') || '';
+  const status = document.getElementById('status');
+  const list = document.getElementById('licenses');
+
+  const TIERS = { basic: 'Basic', advanced: 'Advanced' };
+  // Stripe's notification can take a few seconds to reach the key service.
+  const WAIT_MS = 2000;
+  const GIVE_UP_AFTER = 30;
+
+  function say(text) {
+    status.textContent = text;
+    status.hidden = !text;
+  }
+
+  function copyButton(textarea) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn';
+    button.textContent = 'Copy key';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(textarea.value);
+        button.textContent = 'Copied';
+      } catch {
+        textarea.focus();
+        textarea.select();
+        button.textContent = 'Press Ctrl+C to copy';
+      }
+      setTimeout(() => { button.textContent = 'Copy key'; }, 2500);
+    });
+    return button;
+  }
+
+  function show(licenses) {
+    list.replaceChildren();
+    licenses.forEach((license, i) => {
+      const card = document.createElement('article');
+      card.className = 'key-card';
+      const title = document.createElement('h2');
+      title.textContent = `${license.product} ${TIERS[license.tier] || ''}`.trim();
+      const id = document.createElement('p');
+      id.className = 'key-id';
+      id.textContent = `License ID ${license.id}`;
+      const label = document.createElement('label');
+      label.className = 'key-label';
+      label.htmlFor = `key-${i}`;
+      label.textContent = 'Your license key';
+      const text = document.createElement('textarea');
+      text.id = `key-${i}`;
+      text.className = 'key-text';
+      text.readOnly = true;
+      text.rows = 4;
+      text.spellcheck = false;
+      text.value = license.key;
+      text.addEventListener('focus', () => text.select());
+      card.append(title, id, label, text, copyButton(text));
+      list.append(card);
+    });
+    list.hidden = false;
+    document.getElementById('help').hidden = false;
+    say(licenses.length > 1 ? 'Here are your license keys.' : 'Here is your license key.');
+  }
+
+  async function fetchKeys(attempt) {
+    let response;
+    try {
+      response = await fetch(
+        `${service}/v1/order?session_id=${encodeURIComponent(session)}`,
+        { cache: 'no-store' },
+      );
+    } catch {
+      response = null;
+    }
+    if (response && response.ok) {
+      const body = await response.json().catch(() => null);
+      if (body && Array.isArray(body.licenses) && body.licenses.length) return show(body.licenses);
+    }
+    const pending = response && response.status === 404;
+    if ((pending || !response) && attempt < GIVE_UP_AFTER) {
+      say(attempt < 3 ? 'Getting your license key…' : 'Your payment went through. Your key is on its way…');
+      return setTimeout(() => fetchKeys(attempt + 1), WAIT_MS);
+    }
+    say(
+      'Your payment went through, but your key could not be shown just now. ' +
+        'Refresh this page in a few minutes, or write to hello@techniquestassociates.com ' +
+        'with your receipt and we will send it.',
+    );
+  }
+
+  if (!/^cs_[A-Za-z0-9_]+$/.test(session)) {
+    say('');
+    document.getElementById('missing').hidden = false;
+  } else {
+    fetchKeys(0);
+  }
+})();
+</script>
+</body>
+</html>
