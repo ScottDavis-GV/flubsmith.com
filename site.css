@@ -1,0 +1,115 @@
+/* flubsmith.com: one page about FlubSmith, a privacy page and a page-not-found page.
+   System fonts, no trackers, light and dark. Laid out like the other TechniQuest sites,
+   in FlubSmith's own colours: cool slate and the blue of a retake. */
+:root {
+  --paper: #f4f6f9;
+  --surface: #ffffff;
+  --ink: #161a21;
+  --ink-2: #48505e;
+  --ink-3: #646c7a;
+  --rule: rgba(22, 26, 33, 0.12);
+  --accent: #1f5fd1;
+  --accent-soft: #e4edfc;
+  --wave: #9aa3b2;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16181d; --surface: #1e2128; --ink: #e6e8ec; --ink-2: #bcc2cc; --ink-3: #9aa1ae;
+    --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #16181d; --surface: #1e2128; --ink: #e6e8ec; --ink-2: #bcc2cc; --ink-3: #9aa1ae;
+  --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 17px/1.6 var(--font-body); margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px; background: var(--surface); color: var(--ink); }
+
+.wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+
+/* ---------- Header ---------- */
+.top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 19px/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.brand span { color: var(--accent); }
+.brand svg { width: 28px; height: 28px; flex: none; }
+.top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 15px; }
+.top nav a { color: var(--ink-2); text-decoration: none; }
+.top nav a:hover, .top nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+/* The mark: a take drawn as level bars, the re-recorded flub in the middle in blue. */
+.mark .take { fill: var(--wave); }
+.mark .retake { fill: var(--accent); }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 64px 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 40px; align-items: center; }
+.hero-text { max-width: 44rem; min-width: 0; }
+.eyebrow { display: block; font: 500 13px/1.4 var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+.hero h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 700; letter-spacing: -0.02em; margin-top: 12px; }
+.lede { font-size: 20px; color: var(--ink-2); margin-top: 18px; max-width: 40rem; }
+.cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; font: 600 16px/1 var(--font-body); padding: 13px 18px; border-radius: 6px; background: var(--accent); color: var(--surface); text-decoration: none; }
+.btn.quiet { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+
+/* A take with one flub fixed: the waveform, the cut either side at a pause, and the
+   retake dropped into place. */
+.take-figure { margin: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 18px 14px; }
+.take-figure svg { display: block; width: 100%; height: auto; }
+.take-figure .bar { fill: var(--wave); }
+.take-figure .fix { fill: var(--accent); }
+.take-figure .cut { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.take-figure .band { fill: var(--accent-soft); }
+.take-figure figcaption { margin-top: 10px; font: 13px/1.5 var(--font-mono); color: var(--ink-3); }
+
+/* ---------- Sections ---------- */
+.section { border-top: 1px solid var(--rule); padding-block: 48px; }
+.section > h2 { font-size: clamp(26px, 3.2vw, 34px); font-weight: 700; margin-top: 8px; }
+.section > p.intro { color: var(--ink-2); margin-top: 10px; max-width: 42rem; }
+.cards { margin-top: 24px; display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+.card h3 { font-size: 21px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.card h3 svg { width: 24px; height: 24px; color: var(--accent); flex: none; }
+.card p { color: var(--ink-2); }
+
+/* The four steps of fixing a flub: a real sequence, so it is numbered. */
+.steps { margin: 24px 0 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 16px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.steps li { counter-increment: step; border-top: 2px solid var(--accent); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
+.steps li::before { content: counter(step); font: 600 13px/1 var(--font-mono); color: var(--accent); }
+.steps h3 { font-size: 19px; font-weight: 700; }
+.steps p { color: var(--ink-2); font-size: 16px; }
+
+/* ---------- Footer ---------- */
+.site-foot { border-top: 1px solid var(--rule); padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: 14px; color: var(--ink-3); }
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.site-foot a { color: var(--ink-3); overflow-wrap: anywhere; }
+
+/* ---------- Policy pages ---------- */
+.doc { max-width: 720px; padding-block: 40px 56px; }
+.doc h1 { font-size: 36px; font-weight: 700; }
+.doc h2 { font-size: 21px; font-weight: 700; margin-top: 32px; }
+.doc p, .doc ul { margin-top: 10px; color: var(--ink-2); }
+.doc ul { padding-left: 22px; display: grid; gap: 6px; }
+.doc .updated { font: 13px/1.5 var(--font-mono); color: var(--ink-3); margin-top: 8px; }
+.doc .summary { margin-top: 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 18px; }
+.doc .summary p { margin-top: 0; }
+.doc code { font: 14px var(--font-mono); background: var(--rule); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .take-figure { max-width: 420px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .hero { padding-block: 40px 32px; }
+  .cards, .steps { grid-template-columns: minmax(0, 1fr); }
+}
