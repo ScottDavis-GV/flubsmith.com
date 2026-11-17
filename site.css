@@ -88,6 +88,23 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 .steps h3 { font-size: 19px; font-weight: 700; }
 .steps p { color: var(--ink-2); font-size: 16px; }
 
+/* ---------- Pricing ---------- */
+.plans { margin-top: 24px; display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.plan { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+/* The tag sits in the corner, so the heading and price line up across all three cards. */
+.plan .tag { position: absolute; top: 20px; right: 20px; }
+.plan.feat { border: 2px solid var(--accent); padding: 21px; }
+.plan h3 { font-size: 22px; font-weight: 700; }
+.plan .price { font: 700 36px/1.1 var(--font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.plan .price span { font: 500 13px/1 var(--font-mono); letter-spacing: 0.02em; color: var(--ink-3); }
+.plan .pitch { color: var(--ink-2); }
+.plan ul { margin: 4px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); list-style: none; display: grid; gap: 6px; font-size: 15px; color: var(--ink-2); }
+.plan li { padding-left: 22px; position: relative; }
+.plan li::before { content: ""; position: absolute; left: 2px; top: 0.55em; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
+.tag { justify-self: start; font: 500 12px/1 var(--font-mono); padding: 6px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.trial { margin-top: 20px; max-width: 46rem; color: var(--ink-2); }
+.trial strong { color: var(--ink); }
+
 /* ---------- Footer ---------- */
 .site-foot { border-top: 1px solid var(--rule); padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: 14px; color: var(--ink-3); }
 .site-foot nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
@@ -108,6 +125,7 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
   .hero { grid-template-columns: minmax(0, 1fr); }
   .take-figure { max-width: 420px; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plans { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
 }
 @media (max-width: 640px) {
   .hero { padding-block: 40px 32px; }
