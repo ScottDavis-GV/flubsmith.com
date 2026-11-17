@@ -41,7 +41,7 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 /* ---------- Header ---------- */
 .top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; padding-block: 18px; border-bottom: 1px solid var(--rule); }
 .brand { display: flex; align-items: center; gap: 10px; font: 700 19px/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
-.brand span { color: var(--accent); }
+.brand .smith { color: var(--accent); }
 .brand svg { width: 28px; height: 28px; flex: none; }
 .top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 15px; }
 .top nav a { color: var(--ink-2); text-decoration: none; }
