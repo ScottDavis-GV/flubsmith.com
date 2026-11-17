@@ -50,10 +50,20 @@
       <li>Paste the key into <strong>Add a license key</strong> and choose <strong>Add key</strong>.</li>
     </ol>
     <p>A key works on up to three of your computers. To move it to another, choose <strong>Remove</strong> beside it on the old one first.</p>
-    <p><strong>Renewed or upgraded?</strong> Paste this new key in place of your old one on each computer. It has the same license ID, so it doesn't use up another computer.</p>
     <div class="summary">
       <p><strong>Save this key now,</strong> for example in a password manager. If you lose it, write to <a href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20license">hello@techniquestassociates.com</a> with your license ID or your receipt and we'll send it again.</p>
     </div>
+  </section>
+
+  <section id="renewal-help" hidden>
+    <h2>Getting your updated key</h2>
+    <p>For your security, a renewed or upgraded key is not shown here. Your copy of FlubSmith collects it, using the key it already has:</p>
+    <ol class="key-steps">
+      <li>Open FlubSmith on a computer where your license is already set up.</li>
+      <li>In the settings panel on the right, find <strong>License</strong>.</li>
+      <li>Choose <strong>Check for updated key</strong>.</li>
+    </ol>
+    <p>Do this on each of your computers. It doesn't use up another computer. If your license isn't set up anywhere just now, write to <a href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20renewal">hello@techniquestassociates.com</a> with your license ID and receipt.</p>
   </section>
 </main>
 
@@ -101,8 +111,12 @@
     return button;
   }
 
+  const APPLIED = { renewal: 'Renewal applied', upgrade: 'Upgrade applied' };
+
   function show(licenses) {
     list.replaceChildren();
+    let keys = 0;
+    let applied = 0;
     licenses.forEach((license, i) => {
       const card = document.createElement('article');
       card.className = 'key-card';
@@ -111,6 +125,16 @@
       const id = document.createElement('p');
       id.className = 'key-id';
       id.textContent = `License ID ${license.id}`;
+      // A renewal or upgrade comes without a key: the app collects it.
+      if (typeof license.key !== 'string') {
+        const note = document.createElement('p');
+        note.textContent = `${APPLIED[license.bought] || 'Applied'} to this license.`;
+        card.append(title, id, note);
+        list.append(card);
+        applied++;
+        return;
+      }
+      keys++;
       const label = document.createElement('label');
       label.className = 'key-label';
       label.htmlFor = `key-${i}`;
@@ -127,8 +151,15 @@
       list.append(card);
     });
     list.hidden = false;
-    document.getElementById('help').hidden = false;
-    say(licenses.length > 1 ? 'Here are your license keys.' : 'Here is your license key.');
+    document.getElementById('help').hidden = keys === 0;
+    document.getElementById('renewal-help').hidden = applied === 0;
+    say(
+      keys > 1
+        ? 'Here are your license keys.'
+        : keys === 1
+          ? 'Here is your license key.'
+          : 'Your payment went through and has been applied to your license.',
+    );
   }
 
   async function fetchKeys(attempt) {
