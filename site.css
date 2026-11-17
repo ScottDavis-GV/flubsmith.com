@@ -11,6 +11,8 @@
   --accent: #1f5fd1;
   --accent-soft: #e4edfc;
   --wave: #9aa3b2;
+  --rule-strong: rgba(22, 26, 33, 0.22);
+  --shade: #e8ecf2;
   --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
   --font-body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
   --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
@@ -18,13 +20,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #16181d; --surface: #1e2128; --ink: #e6e8ec; --ink-2: #bcc2cc; --ink-3: #9aa1ae;
-    --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372;
+    --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372; --rule-strong: rgba(255, 255, 255, 0.22); --shade: #22262e;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #16181d; --surface: #1e2128; --ink: #e6e8ec; --ink-2: #bcc2cc; --ink-3: #9aa1ae;
-  --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372;
+  --rule: rgba(255, 255, 255, 0.12); --accent: #6ea4fa; --accent-soft: #1a2a45; --wave: #5c6372; --rule-strong: rgba(255, 255, 255, 0.22); --shade: #22262e;
   color-scheme: dark;
 }
 
@@ -89,20 +91,25 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 .steps p { color: var(--ink-2); font-size: 16px; }
 
 /* ---------- Pricing ---------- */
+/* Each tier in its own clearly outlined box, an icon beside its name, and the trial
+   note in a shaded box underneath. */
 .plans { margin-top: 24px; display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
-.plan { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: grid; gap: 10px; align-content: start; }
-/* The tag sits in the corner, so the heading and price line up across all three cards. */
+.plan { position: relative; background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 12px; padding: 22px 24px 24px; display: grid; gap: 10px; align-content: start; }
+.plan.feat { border: 2px solid var(--accent); padding: 21px 23px 23px; }
 .plan .tag { position: absolute; top: 20px; right: 20px; }
-.plan.feat { border: 2px solid var(--accent); padding: 21px; }
-.plan h3 { font-size: 22px; font-weight: 700; }
+.plan h3 { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.plan h3 svg { width: 22px; height: 22px; color: var(--ink-3); flex: none; }
+.plan.feat h3 svg { color: var(--accent); }
 .plan .price { font: 700 36px/1.1 var(--font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .plan .price span { font: 500 13px/1 var(--font-mono); letter-spacing: 0.02em; color: var(--ink-3); }
 .plan .pitch { color: var(--ink-2); }
-.plan ul { margin: 4px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); list-style: none; display: grid; gap: 6px; font-size: 15px; color: var(--ink-2); }
-.plan li { padding-left: 22px; position: relative; }
-.plan li::before { content: ""; position: absolute; left: 2px; top: 0.55em; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
+.plan ul { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.plan li { padding-left: 24px; position: relative; }
+.plan li::before { content: ""; position: absolute; left: 3px; top: 0.5em; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
 .tag { justify-self: start; font: 500 12px/1 var(--font-mono); padding: 6px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
-.trial { margin-top: 20px; max-width: 46rem; color: var(--ink-2); }
+.trial { margin-top: 16px; background: var(--shade); border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start; }
+.trial svg { width: 20px; height: 20px; color: var(--ink-3); flex: none; margin-top: 3px; }
+.trial p { color: var(--ink-2); max-width: 52rem; }
 .trial strong { color: var(--ink); }
 
 /* ---------- Footer ---------- */
