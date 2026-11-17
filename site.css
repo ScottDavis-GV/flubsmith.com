@@ -60,7 +60,7 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 .hero h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 700; letter-spacing: -0.02em; margin-top: 12px; }
 .lede { font-size: 20px; color: var(--ink-2); margin-top: 18px; max-width: 40rem; }
 .cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
-.btn { display: inline-block; font: 600 16px/1 var(--font-body); padding: 13px 18px; border-radius: 6px; background: var(--accent); color: var(--surface); text-decoration: none; }
+.btn { display: inline-block; font: 600 16px/1 var(--font-body); padding: 13px 18px; border: 1px solid var(--accent); border-radius: 6px; background: var(--accent); color: var(--surface); text-decoration: none; }
 .btn.quiet { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 
 /* A take with one flub fixed: the waveform, the cut either side at a pause, and the
@@ -93,8 +93,13 @@ kbd { font: 600 0.85em var(--font-mono); padding: 1px 6px; border: 1px solid var
 /* ---------- Pricing ---------- */
 /* Each tier in its own clearly outlined box, an icon beside its name, and the trial
    note in a shaded box underneath. */
-.plans { margin-top: 24px; display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
-.plan { position: relative; background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 12px; padding: 22px 24px 24px; display: grid; gap: 10px; align-content: start; }
+.plans { margin-top: 24px; display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+.plan { position: relative; background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 12px; padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s ease, background-color 0.15s ease; }
+/* A light highlight on hover; the button is what to click. Each button sits at the foot of its box, level with the others. */
+.plan:hover { border-color: var(--accent); }
+.plan .btn { margin-top: auto; text-align: center; }
+.btn.quiet:hover { background: var(--accent-soft); }
+@media (prefers-reduced-motion: reduce) { .plan { transition: none; } }
 .plan.feat { border: 2px solid var(--accent); padding: 21px 23px 23px; }
 .plan .tag { position: absolute; top: 20px; right: 20px; }
 .plan h3 { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
