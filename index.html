@@ -215,7 +215,7 @@ const BUY_LABELS = { free: 'Download free', basic: 'Buy Basic', advanced: 'Buy A
 (() => {
   const left = document.getElementById('founder-left');
   const button = document.querySelector('[data-buy="founder"]');
-  fetch('https://keys.flubsmith.com/v1/offers?product=flubsmith', { cache: 'no-store' })
+  fetch('https://keys.techniquestassociates.com/v1/offers?product=flubsmith', { cache: 'no-store' })
     .then((r) => (r.ok ? r.json() : null))
     .then((body) => {
       const f = body && body.founder;
