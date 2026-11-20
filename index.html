@@ -7,7 +7,7 @@
 <meta name="description" content="FlubSmith is a desktop teleprompter and voice recorder. Read your script, re-record just the lines you fluffed, and export a clean take, without another program.">
 <link rel="canonical" href="https://www.flubsmith.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="site.css?v=7">
+<link rel="stylesheet" href="site.css?v=8">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -121,7 +121,7 @@
           <li>Autosave and crash recovery</li>
           <li>WAV export, as recorded</li>
         </ul>
-        <a class="btn quiet" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Free">Join the beta</a>
+        <a class="btn quiet" data-buy="free" aria-disabled="true">Coming soon</a>
       </article>
       <article class="plan">
         <h3><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-scissors"/></svg>Basic</h3>
@@ -134,7 +134,7 @@
           <li>Save takes and finish them another day</li>
           <li>One year of updates and support, then $25 a year if you want more</li>
         </ul>
-        <a class="btn quiet" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Basic">Join the beta</a>
+        <a class="btn quiet" data-buy="basic" aria-disabled="true">Coming soon</a>
       </article>
       <article class="plan feat">
         <span class="tag">Everything</span>
@@ -150,7 +150,7 @@
           <li>Use your own speech model</li>
           <li>One year of updates and support, then $59 a year if you want more</li>
         </ul>
-        <a class="btn" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Advanced">Join the beta</a>
+        <a class="btn" data-buy="advanced" aria-disabled="true">Coming soon</a>
       </article>
       <article class="plan" id="founder">
         <span class="tag">First 100</span>
@@ -163,7 +163,7 @@
           <li>One year of updates and support, then $59 a year if you want more</li>
         </ul>
         <p class="left" id="founder-left" role="status" aria-live="polite" hidden></p>
-        <a class="btn quiet" data-buy="founder" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Founder">Join the beta</a>
+        <a class="btn quiet" data-buy="founder" aria-disabled="true">Coming soon</a>
       </article>
     </div>
     <div class="trial">
@@ -185,6 +185,31 @@
 </footer>
 
 <script>
+/* STORE SETTINGS: the one place to open the store and set its links.
+   open   false = not on sale: each card's button reads "Coming soon" and does
+          nothing. true = on sale: each button whose link below is set goes to it.
+   links  free: where to download FlubSmith. basic, advanced, founder: the Stripe
+          Payment Links (https://buy.stripe.com/…), made as the techniquest-keys
+          user manual, section 5, says, each redirecting after payment to
+          https://www.flubsmith.com/thanks.html?session_id={CHECKOUT_SESSION_ID}
+   Prices are written in the cards above. Renewals and upgrades are bought from
+   the app (techniquest-keys ADR 041). */
+const STORE = {
+  open: false,
+  links: { free: '', basic: '', advanced: '', founder: '' },
+};
+const BUY_LABELS = { free: 'Download free', basic: 'Buy Basic', advanced: 'Buy Advanced', founder: 'Buy Founder' };
+
+(() => {
+  for (const button of document.querySelectorAll('[data-buy]')) {
+    const link = STORE.links[button.dataset.buy] || '';
+    if (!STORE.open || !link.startsWith('https://')) continue;
+    button.href = link;
+    button.textContent = BUY_LABELS[button.dataset.buy];
+    button.removeAttribute('aria-disabled');
+  }
+})();
+
 // How many Founder licences are left, from the license key service
 // (techniquest-keys, ADR 040). If it can't be reached, the card shows without a count.
 (() => {
