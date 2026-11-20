@@ -7,7 +7,7 @@
 <meta name="description" content="FlubSmith is a desktop teleprompter and voice recorder. Read your script, re-record just the lines you fluffed, and export a clean take, without another program.">
 <link rel="canonical" href="https://www.flubsmith.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="site.css?v=5">
+<link rel="stylesheet" href="site.css?v=6">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -152,10 +152,23 @@
         </ul>
         <a class="btn" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Advanced">Join the beta</a>
       </article>
+      <article class="plan" id="founder">
+        <span class="tag">First 100</span>
+        <h3><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wand"/></svg>Founder</h3>
+        <p class="price">$79 <span>one time</span></p>
+        <p class="pitch">Advanced, at the Founder price, for the first 100 buyers.</p>
+        <ul>
+          <li>Everything in Advanced</li>
+          <li>The same key as Advanced, on up to three computers</li>
+          <li>One year of updates and support, then $59 a year if you want more</li>
+        </ul>
+        <p class="left" id="founder-left" role="status" aria-live="polite" hidden></p>
+        <a class="btn quiet" data-buy="founder" href="mailto:hello@techniquestassociates.com?subject=FlubSmith%20beta%3A%20Founder">Join the beta</a>
+      </article>
     </div>
     <div class="trial">
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
-      <p><strong>Try everything free for 14 days.</strong> Paid licences include one year of updates and support. After that, another year costs $25 for Basic or $59 for Advanced. Renewing is up to you: if you don’t, the version you have keeps working for ever. Upgrading from Basic to Advanced costs $70.</p>
+      <p><strong>Try everything free for 14 days.</strong> Paid licences include one year of updates and support. After that, another year costs $25 for Basic or $59 for Advanced. Renewing is up to you: if you don’t, the version you have keeps working for ever. Upgrading from Basic to Advanced costs $70. The first 100 buyers can have Advanced for $79.</p>
     </div>
   </section>
 
@@ -170,5 +183,31 @@
   <span>&copy; 2026 <a href="https://techniquestassociates.com/">TechniQuest Associates</a></span>
   <nav aria-label="Footer"><a href="privacy.html">Privacy policy</a><a href="mailto:hello@techniquestassociates.com">hello@techniquestassociates.com</a></nav>
 </footer>
+
+<script>
+// How many Founder licences are left, from the license key service
+// (techniquest-keys, ADR 040). If it can't be reached, the card shows without a count.
+(() => {
+  const left = document.getElementById('founder-left');
+  const button = document.querySelector('[data-buy="founder"]');
+  fetch('https://keys.flubsmith.com/v1/offers?product=flubsmith', { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((body) => {
+      const f = body && body.founder;
+      if (!f || !Number.isInteger(f.left) || !Number.isInteger(f.limit)) return;
+      if (f.left <= 0) {
+        left.textContent = 'Sold out';
+        button.textContent = 'Sold out';
+        button.removeAttribute('href');
+        button.setAttribute('aria-disabled', 'true');
+        button.setAttribute('role', 'link');
+      } else {
+        left.textContent = `${f.left} of ${f.limit} left`;
+      }
+      left.hidden = false;
+    })
+    .catch(() => {});
+})();
+</script>
 </body>
 </html>
